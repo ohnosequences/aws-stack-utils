@@ -1,0 +1,117 @@
+{
+  
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "This template launches an instance, which on startup downloads a file from the url you specify, and executes it. ",
+
+  "Parameters" : {   
+   
+    "KeyName" : {
+      "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+      "Type" : "String"
+    },
+    "InstanceConf" : {
+    	"Description" : "this is the param for the URL to get self conf",
+    	"Type" : "String",
+    	"Default" : "http://resources.ohnosequences.com/ec2/instance-conf/java-latest"
+    },
+    "InstanceAvailabilityZone" : {
+      "Description" : "The availability zone within your region you want your stack to live in",
+      "Type" : "String"
+    },
+    "EC2InstanceType" : {
+      "Description" : "The instance type that you want to launch; note that only x64 instance types are supported; this means that you should choose between: t1.micro, m1.large, m1.xlarge, m2.xlarge, m2.2xlarge, m2.4xlarge, c1.xlarge, cc1.4xlarge",
+      "Type" : "String",
+      "Default" : "t1.micro"
+    },
+    "InstanceOperatorEmail" : {      
+      "Description" : "EMail address to notify if there are any operational issues",
+      "Type" : "String",
+      "Default" : "admin@ohnosequences.com"
+    }
+  },
+
+  "Mappings" : {
+
+    "AWSInstanceType2Arch" : {
+      "t1.micro"    : { "Arch" : "64" },
+      "m1.large"    : { "Arch" : "64" },
+      "m1.xlarge"   : { "Arch" : "64" },
+      "m2.xlarge"   : { "Arch" : "64" },
+      "m2.2xlarge"  : { "Arch" : "64" },
+      "m2.4xlarge"  : { "Arch" : "64" },
+      "c1.xlarge"   : { "Arch" : "64" },
+      "cc1.4xlarge" : { "Arch" : "64" }
+    },
+    "AWSRegion2AMI" : {
+      "us-east-1" : { "AMI" : "ami-8e1fece7" },
+      "us-west-1" : { "AMI" : "ami-c7c99982" },
+      "eu-west-1" : { "AMI" : "ami-45cefa31" },
+      "ap-southeast-1" : { "AMI" : "ami-6ef08e3c" },
+      "ap-northeast-1" : { "AMI" : "ami-2e0ca72f" }
+    }
+  },  
+
+  "Resources" : {
+
+    "Ec2Instance" : {
+
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "AvailabilityZone" : { "Ref" : "InstanceAvailabilityZone" },        
+        "SecurityGroups" : [ { "Ref" : "InstanceSecurityGroup" } ],        
+        "KeyName" : { "Ref" : "KeyName" },        
+        "ImageId" : { "Fn::FindInMap" : [ "AWSRegion2AMI", { "Ref" : "AWS::Region" }, "AMI" ]},
+        "InstanceType" : { "Ref" : "EC2InstanceType" },
+        "UserData" : {
+
+        	"Fn::Base64" : {
+            
+            "Fn::Join" : [  "\n", [                                      
+                                    "#!/bin/sh",
+                                    { "Fn::Join" : ["", ["conf_url=", { "Ref" : "InstanceConf"}]] },
+                                    "cd /opt",
+                                    "mkdir -p conf",
+                                    "chown ec2-user:ec2-user conf",
+                                    "cd conf",
+                                    "wget -O selfConf.sh $conf_url",
+                                    "echo $conf_url > instance_conf_type",
+                                    "chmod u+x selfConf.sh",
+                                    "source ./selfConf.sh > selfConf.log",
+                                    "chown ec2-user:ec2-user ./*"                          
+                                  ]
+                        ]
+            
+          }
+        }             
+      }
+    },
+
+    "InstanceSecurityGroup" : {
+
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Enable SSH access via port 22",
+        "SecurityGroupIngress" : [ {
+          "IpProtocol" : "tcp",
+          "FromPort" : "22",
+          "ToPort" : "22",
+          "CidrIp" : "0.0.0.0/0"
+        } ]
+      }
+    }
+  },
+
+  "Outputs" : {
+    
+    "InstanceId" : {
+      "Description" : "InstanceId of the newly created EC2 instance",
+      "Value" : { "Ref" : "Ec2Instance" }
+    },    
+    "InstanceConf" : {
+    	"Description" : "the conf applied to your instance",
+    	"Value" : { "Ref" : "InstanceConf" }
+    }
+  }
+
+}

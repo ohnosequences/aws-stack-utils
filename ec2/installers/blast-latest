@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# you should run this as source, root user
+#
+
+# vars
+BLAST_BASE_URL=http://resources.ohnosequences.com/bin/blast/x64/latest/blast.rpm
+BLAST_BIN_FILE=blast.rpm
+BLAST_INSTALL_BASE=/opt
+BLAST_INSTALL_FOLDER=blast
+BLAST_INSTALL_PATH=$BLAST_INSTALL_BASE/$BLAST_INSTALL_FOLDER
+
+# create folder and go into
+cd $BLAST_INSTALL_BASE
+mkdir -p $BLAST_INSTALL_FOLDER
+cd $BLAST_INSTALL_FOLDER
+
+# download jdk, make it exec
+wget -O $BLAST_BIN_FILE $BLAST_BASE_URL
+chmod u+x $BLAST_BIN_FILE
+
+# install!
+rpm -ivh $BLAST_BIN_FILE
+
+
+
+

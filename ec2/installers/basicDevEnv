@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# you should run this as source, root user
+#
+
+# we're just installing the default dev tools package group
+yum -y groupinstall "Development Tools"

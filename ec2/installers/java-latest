@@ -49,9 +49,6 @@ source /home/ec2-user/.bash_profile
 # sanity check:
 java -version
 
-# remove openJDK
-yum remove java-1.6.0-openjdk*
-
 
 
 

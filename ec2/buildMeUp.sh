@@ -19,10 +19,11 @@ chown ec2-user:ec2-user $conf_folder
 
 # get provided user data
 cd $conf_folder
-curl -s --output address.tmp $user_data_url 
-wget -O selfConf.sh `cat address.tmp`
-cat address.tmp > instance_conf_type
-rm address.tmp
+curl -s --output addressFragment.tmp $user_data_url 
+
+wget -O selfConf.sh $base_url/`cat addressFragment.tmp`
+cat addressFragment.tmp > instance_conf_type
+rm addressFragment.tmp
 
 # set perms and execute it 
 chmod u+x selfConf.sh

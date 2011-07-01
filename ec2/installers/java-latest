@@ -28,27 +28,24 @@ rm $JAVA_BIN_FILE
 
 # get the folder and set JAVA_INSTALL_PATH
 JAVA_INSTALL_PATH=$JAVA_INSTALL_PATH/`ls | grep jdk1*`
-EXPORT_JAVA_HOME_STRING="export JAVA_HOME="$JAVA_INSTALL_PATH
-EXPORT_JAVA_TO_PATH_STRING="export PATH=\$JAVA_HOME/bin:\$PATH"
 
 # make JAVA_HOME globally available; This should be in terms of JAVA_INSTAL_PATH
 echo "JAVA_HOME="$JAVA_INSTALL_PATH | tee -a /etc/environment
-echo "PATH=\$JAVA_HOME/bin:\$PATH" | tee -a /etc/environment
 source /etc/environment
 
 # root $JAVA_HOME conf; don't know how sensible is this
 echo "JAVA_HOME="$JAVA_INSTALL_PATH | tee -a /root/.bash_profile
 echo "PATH=\$JAVA_HOME/bin:\$PATH" | tee -a /root/.bash_profile
-echo $EXPORT_JAVA_HOME_STRING | tee -a /root/.bash_profile
-echo $EXPORT_JAVA_TO_PATH_STRING | tee -a /root/.bash_profile
+echo "export JAVA_HOME" | tee -a /root/.bash_profile
+echo "export PATH" | tee -a /root/.bash_profile
 #source it!
 source /root/.bash_profile
 
 # ec2-user $JAVA_HOME conf
 echo "JAVA_HOME="$JAVA_INSTALL_PATH | tee -a /home/ec2-user/.bash_profile
 echo "PATH=\$JAVA_HOME/bin:\$PATH" | tee -a /home/ec2-user/.bash_profile
-echo $EXPORT_JAVA_HOME_STRING | tee -a /home/ec2-user/.bash_profile
-echo $EXPORT_JAVA_TO_PATH_STRING | tee -a /home/ec2-user/.bash_profile
+echo "export JAVA_HOME" | tee -a /home/ec2-user/.bash_profile
+echo "export PATH" | tee -a /home/ec2-user/.bash_profile
 # source it!
 source /home/ec2-user/.bash_profile
 

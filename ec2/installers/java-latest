@@ -32,8 +32,8 @@ SET_JAVA_HOME_STRING="export JAVA_HOME="$JAVA_INSTALL_PATH
 ADD_JAVA_TO_PATH_STRING="export PATH=\$JAVA_HOME/bin:\$PATH"
 
 # make JAVA_HOME globally available; This should be in terms of JAVA_INSTAL_PATH
-echo $SET_JAVA_HOME_STRING | tee -a /etc/environment
-echo $ADD_JAVA_TO_PATH_STRING tee -a /etc/environment
+echo "JAVA_HOME="$JAVA_INSTALL_PATH | tee -a /etc/environment
+echo "PATH=\$JAVA_HOME/bin:\$PATH" | tee -a /etc/environment
 source /etc/environment
 
 # root $JAVA_HOME conf; don't know how sensible is this

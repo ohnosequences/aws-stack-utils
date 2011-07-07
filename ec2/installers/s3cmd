@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# you should run this as source, root user
+#
+
+# vars 
+repos_dir=/etc/yum.repos.d
+repo_conf_file_url=http://s3tools.org/repo/RHEL_6/s3tools.repo
+
+# add s3cmd repo
+wget -O $repos_dir/s3tools.repo $repo_conf_file_url
+# install it
+yum -y install s3cmd
+
+mkdir -p /opt/s3cmd
+wget -O .s3cfg http://resources.ohnosequences.com/s3cmd/s3cmd_template_conf
+
+# conf file juggling
+aws_id_string=$(cat /opt/init/aws-credentials | grep AWSAccessKeyId=)
+aws_id=${aws_id_string#AWSAccessKeyId=}
+echo "access_key = "$aws_id >> .s3cfg
+
+aws_secret_string=$(cat /opt/init/aws-credentials | grep AWSSecretKey=)
+aws_secret=${aws_secret_string#AWSSecretKey=}
+echo "secret_key = "$aws_secret >> .s3cfg
+
+# copy to root 
+cp .s3cfg /root/.s3cfg
+chmod 600 /root/.s3cfg
+
+# copy to ec2-user
+mv .s3cfg /home/ec2-user/.s3cfg
+chown ec2-user:ec2-user /home/ec2-user/.s3cfg
+chmod 600 /home/ec2-user/.s3cfg
+
+
+
+

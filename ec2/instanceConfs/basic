@@ -18,3 +18,7 @@ chmod u+x java.install
 wget -O blast.install $BASE_URL/blast-latest
 chmod u+x blast.install
 ./blast.install
+
+wget -O s3cmd.install $BASE_URL/blast-latest
+chmod u+x s3cmd.install
+./s3cmd.install

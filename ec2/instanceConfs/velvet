@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# assuming you're running this as root
+# this is for aws Linux AMIs and derivatives; it assumes that
+# there's a ec2-user user.
+
+# vars
+BASE_URL=http://resources.ohnosequences.com/ec2/installers
+
+wget -O basicDevEnv.install $BASE_URL/basicDevEnv
+chmod u+x basicDevEnv.install
+./basicDevEnv.install
+
+wget -O java.install $BASE_URL/velvet-latest
+chmod u+x velvet.install
+./velvet.install

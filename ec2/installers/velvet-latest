@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# you should run this as source, root user
+#
+$base_url=http://resources.ohnosequences.com
+
+mkdir -p velvet
+wget $base_url/velvet/velvet-latest.tar.gz
+tar -xzf velvet-latest.tar.gz
+cd velvet*
+make
+
+# add to path
+cp velveth /usr/bin
+cp velvetg /usr/bin

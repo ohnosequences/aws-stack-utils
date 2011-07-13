@@ -5,3 +5,4 @@
 
 # we're just installing the default dev tools package group
 yum -y groupinstall "Development Tools"
+yum -y install git

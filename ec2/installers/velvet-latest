@@ -4,7 +4,8 @@
 #
 base_url=http://resources.ohnosequences.com
 
-mkdir -p velvet
+mkdir -p /opt/velvet
+cd /opt/velvet
 wget $base_url/velvet/velvet-latest.tar.gz
 tar -xzf velvet-latest.tar.gz
 cd velvet*

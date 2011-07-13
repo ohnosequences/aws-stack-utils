@@ -11,6 +11,6 @@ wget -O basicDevEnv.install $BASE_URL/basicDevEnv
 chmod u+x basicDevEnv.install
 ./basicDevEnv.install
 
-wget -O java.install $BASE_URL/velvet-latest
+wget -O velvet.install $BASE_URL/velvet-latest
 chmod u+x velvet.install
 ./velvet.install

@@ -2,7 +2,7 @@
 #
 # you should run this as source, root user
 #
-$base_url=http://resources.ohnosequences.com
+base_url=http://resources.ohnosequences.com
 
 mkdir -p velvet
 wget $base_url/velvet/velvet-latest.tar.gz

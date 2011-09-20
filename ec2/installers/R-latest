@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# you should run this as source, root user
+#
+base_url=http://resources.ohnosequences.com
+
+# create folder
+mkdir -p /opt/R
+cd /opt/R
+
+# get file
+wget $base_url/R/latest/R-src.tar.gz
+tar -xvzf R-src.tar.gz
+rm R-src.tar.gz
+cd R*
+
+# fortran + readline support as in
+# http://ec2-50-17-241-13.compute-1.amazonaws.com/wordpress/2011/05/04/build-instructions-for-r-on-amazon-ec2/
+yum install gcc-gfortran readline-devel
+
+# R install; this builds R from source, after installing required yum packages
+# this means that on a reg node, this is bound to be slooow
+
+# run configure; no X11 support
+./configure –-with-x=no
+# compile; sit down and relax
+make
+# install
+make install
+
+
+

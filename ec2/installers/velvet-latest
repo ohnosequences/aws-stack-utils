@@ -4,12 +4,54 @@
 #
 base_url=http://resources.ohnosequences.com
 
+
+## default params
+
+# default MAXKMERLENGTH
+kmerlength=80
+# default OMP
+multithreaded=1
+# default CATEGORIES
+numberofcats=4
+
+## parse params
+while [ "$1" != "" ]; do
+    case $1 in
+        -k | --max_kmer_length )						shift
+                                kmerlength=$1
+                                ;;
+        -m | --multithreaded )    					shift
+        												if [ "$1" = "no" ]
+        												then	
+        													multithreaded=0
+        												fi        													
+                                ;;
+        -c | --number_of_categories)				shift
+        												numberofcats=$1
+        												;;
+        -h | --help )           usage
+                                exit
+                                ;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
+
+# params string
+compileparams="'MAXKMERLENGTH="$kmerlength"' 'OPENMP="$multithreaded"' 'CATEGORIES="$numberofcats"'"
+
 mkdir -p /opt/velvet
 cd /opt/velvet
 wget $base_url/velvet/velvet-latest.tar.gz
 tar -xzf velvet-latest.tar.gz
 cd velvet*
-make
+# log output
+echo "compiling velvet with "$kmerlength" max k-mer length, "$numberofcats" categories"
+echo "compile params are: "$compileparams
+# compile
+compile="make "$compileparams
+eval $compile
 
 # add to path
 cp velveth /usr/bin

@@ -4,6 +4,18 @@
 #
 base_url=http://resources.ohnosequences.com
 
+usage ()
+{
+echo "
+compiles and installs velvet under the folder you run this. Parameters:
+
+-k | --max_kmer_length: sets the MAXKMERLENGTH compile flag. Defaults to "$kmerlength "
+-c | --number_of_categories: sets the CATEGORIES compile flag. Defaults to "$numberofcats " 
+-m | --multithreaded: (yes|no) sets the OMP compiler flag. Defaults to yes
+-h | --help: this message
+
+" >&2
+}
 
 ## default params
 
@@ -16,18 +28,18 @@ numberofcats=4
 
 ## parse params
 while [ "$1" != "" ]; do
-    case $1 in
-        -k | --max_kmer_length )						shift
-                                kmerlength=$1
-                                ;;
-        -m | --multithreaded )    					shift
-        												if [ "$1" = "no" ]
-        												then	
-        													multithreaded=0
-        												fi        													
-                                ;;
-        -c | --number_of_categories)				shift
-        												numberofcats=$1
+  case $1 in
+    -k | --max_kmer_length )  shift
+      kmerlength=$1
+    ;;
+    -m | --multithreaded ) shift
+      if [ "$1" = "no" ]
+        then
+          multithreaded=0
+      fi        													
+    ;;
+    -c | --number_of_categories)  shift
+      numberofcats=$1
         												;;
         -h | --help )           usage
                                 exit

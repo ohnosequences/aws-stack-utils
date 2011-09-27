@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# you should run this as source, root user
+#
+base_url=http://resources.ohnosequences.com
+
+# sick of perl module not found
+yum -y install perl-*
+# create folder
+mkdir -p /opt/prinseq
+cd /opt/prinseq
+
+# get file, extract, clean
+wget $base_url/prinseq/latest/prinseq.tar.gz
+tar -xzf prinseq.tar.gz
+rm prinseq.tar.gz
+# go inito
+cd prinseq*
+# add to bin
+chmod 755 *.pl
+cp -p ./prinseq-lite.pl /usr/bin/prinseq-lite
+# this one won't work due to perl deps
+cp -p ./prinseq-graphs.pl /prinseq-graphs

@@ -5,4 +5,7 @@
 
 # we're just installing the default dev tools package group
 yum -y groupinstall "Development Tools"
+# git
 yum -y install git
+# screen!
+yum -y install screen

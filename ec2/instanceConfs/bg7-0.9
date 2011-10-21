@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# assuming you're running this as root
+# this is for aws Linux AMIs and derivatives; it assumes that
+# there's a ec2-user user.
+
+# vars
+BASE_URL=http://resources.ohnosequences.com/ec2/installers
+
+wget -O basicDevEnv.install $BASE_URL/basicDevEnv
+chmod u+x basicDevEnv.install
+./basicDevEnv.install
+
+wget -O java.install $BASE_URL/java-latest
+chmod u+x java.install
+./java.install
+
+wget -O blast.install $BASE_URL/blast-latest
+chmod u+x blast.install
+./blast.install
+
+wget -O s3cmd.install $BASE_URL/s3cmd
+chmod u+x s3cmd.install
+./s3cmd.install
+
+wget -O bg7.install $BASE_URL/bg7-0.9
+chmod u+x bg7.install
+./bg7.install 

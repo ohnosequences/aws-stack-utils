@@ -6,8 +6,8 @@
 # vars 
 base_url=http://resources.ohnosequences.com/bg7
 version=0.9
-bg7_file=bg7-$version.tar.gz
-bg7_url=$base_url/$bg7_file
+bg7_file=bg7.jar
+bg7_url=$base_url/$version/$bg7_file
 install_base=/opt
 bg7_folder=bg7
 bg7_install_path=$install_base/$bg7_folder
@@ -16,9 +16,7 @@ bg7_install_path=$install_base/$bg7_folder
 mkdir -p $bg7_install_path
 cd $bg7_install_path
 wget $bg7_url
-# unpack and move
-tar -xvzf $bg7_file
-mv bg7-$version/* ./
-# clean-up
-rmdir bg7-$version
-rm $bg7_file
+# make bg7.jar exec
+chown ec2-user:ec2-user ./*
+chmod u+x $bg7_file
+

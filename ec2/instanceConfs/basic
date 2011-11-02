@@ -1,24 +1,32 @@
 #!/bin/sh
+# ## Basic conf ##
+# this conf sets up a basic ec2 node, with just about the minimum stuff we _always_ need.
 #
-# assuming you're running this as root
-# this is for aws Linux AMIs and derivatives; it assumes that
-# there's a ec2-user user.
+# ### requirements ###
+# all these scripts are designed with an Amazon Linux instance in mind, just because that's what we use. Also, this thing should be run as root; it is intended to be ran just _after_ the boot process, but _before_ any console login.
+# 
+# Due to this been designed for Amazon Linux, you'll see `ec2-user` everywhere; that's just the regular user which has console login to the instance.
+#
 
-# vars
+# this variable stores where are all the ec2 installers
 BASE_URL=http://resources.ohnosequences.com/ec2/installers
 
+# the basic dev environment has just git, C/C++ compilers and stuff like that
 wget -O basicDevEnv.install $BASE_URL/basicDevEnv
 chmod u+x basicDevEnv.install
 ./basicDevEnv.install
 
+# this will install Sun/Oracle JDK (x64, of course)
 wget -O java.install $BASE_URL/java-latest
 chmod u+x java.install
 ./java.install
 
+# BLAST+
 wget -O blast.install $BASE_URL/blast-latest
 chmod u+x blast.install
 ./blast.install
 
+# s3cmd: command line access to s3
 wget -O s3cmd.install $BASE_URL/s3cmd
 chmod u+x s3cmd.install
 ./s3cmd.install

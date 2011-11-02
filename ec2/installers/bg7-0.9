@@ -18,7 +18,7 @@ bg7_bin="bg7"
 bg7_bin_url=$base_url/$version/bin/$bg7_bin
 # resources
 bg7_resources_url=$base_url/$version/resources
-# install path vars
+# install path vars. I'll make this a param and we will have a more or less generic install script
 install_base="/opt"
 bg7_folder="bg7"
 bg7_install_path=$install_base/$bg7_folder
@@ -44,7 +44,7 @@ cd $bg7_install_path/resources
 wget $bg7_resources_url/genetic_code
 wget $bg7_resources_url/genbankOutputConf.xml.template
 
-# make bg7 exec
+# make bg7 exec; note that we have ec2-user here. It would be possible to set this to current user, whatever
 chown -R ec2-user:ec2-user $bg7_install_path
 chmod u+x $bg7_install_path/bin/*
 
@@ -55,8 +55,6 @@ echo "BG7_HOME="$bg7_install_path | tee -a /root/.bash_profile
 echo "PATH=\$BG7_HOME/bin:\$PATH" | tee -a /root/.bash_profile
 echo "export BG7_HOME" | tee -a /root/.bash_profile
 echo "export PATH" | tee -a /root/.bash_profile
-#source it!
-source /root/.bash_profile
 
 # ec2-user $BG7_HOME conf
 echo "BG7_HOME=${bg7_install_path}" >> /home/ec2-user/.bash_profile

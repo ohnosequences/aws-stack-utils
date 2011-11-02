@@ -62,5 +62,6 @@ source /root/.bash_profile
 echo 
 echo "BG7_HOME=${bg7_install_path}" >> /home/ec2-user/.bash_profile
 echo "PATH=\$BG7_HOME/bin:\$PATH" >> tee -a /home/ec2-user/.bash_profile
-echo "export BG7_HOME" >> /home/ec2-user/.bash_profile
-echo "export PATH" >> /home/ec2-user/.bash_profile
+echo "BG7_HOME=${bg7_install_path}" >> /home/ec2-user/.bash_profile
+echo "PATH=\$BG7_HOME/bin:\$PATH" >> /home/ec2-user/.bash_profile
+

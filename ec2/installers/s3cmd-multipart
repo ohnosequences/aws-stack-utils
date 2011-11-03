@@ -29,4 +29,4 @@ chmod 600 /root/.s3cfg
 # copy to ec2-user
 mv .s3cfg /home/ec2-user/.s3cfg
 chown ec2-user:ec2-user /home/ec2-user/.s3cfg
-chmod 600 /home/ec2-user/.s3cfgs
+chmod 600 /home/ec2-user/.s3cfg

@@ -27,6 +27,6 @@ chmod u+x blast.install
 ./blast.install
 
 # s3cmd: command line access to s3
-wget -O s3cmd.install $BASE_URL/s3cmd-multipart
+wget -O s3cmd.install $BASE_URL/s3cmd
 chmod u+x s3cmd.install
 ./s3cmd.install

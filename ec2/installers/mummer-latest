@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # you should run this as source, root user
-#
+# 
 
 # vars
 MUMMER_BASE_URL=http://resources.ohnosequences.com/bin/mummer/src/latest/mummer.tar.gz
@@ -22,8 +22,8 @@ tar -xzf $MUMMER_SRC_FILE
 # install! #
 
 # get path
-MUMMER_BIN_PATH=$MUMMER_INSTALL_PATH/`ls | grep MUM*`
-ADD_MUMMER_TO_PATH_STRING="export PATH=\$MUMMER_BIN_PATH:\$PATH"
+MUMMER_BIN_PATH=${MUMMER_INSTALL_PATH}/`ls | grep MUM*`
+ADD_MUMMER_TO_PATH_STRING="PATH=${MUMMER_BIN_PATH}:\$PATH"
 
 cd $MUMMER_BIN_PATH
 # log the output of make check
@@ -31,7 +31,5 @@ make check > check.log
 # build
 make install
 # add MUMmer to path
-echo $ADD_MUMMER_TO_PATH_STRING tee -a /etc/environment
-source /etc/environment
-echo $ADD_MUMMER_TO_PATH_STRING | tee -a /home/ec2-user/.bash_profile
-source /home/ec2-user/.bash_profile
+echo "${ADD_MUMMER_TO_PATH_STRING}" | tee -a /etc/environment
+echo "${ADD_MUMMER_TO_PATH_STRING}" | tee -a /home/ec2-user/.bash_profile

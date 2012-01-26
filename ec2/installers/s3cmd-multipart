@@ -4,7 +4,7 @@
 #
 set -e
 # vars 
-s3repo=git://github.com/ohnosequences/s3cmd.git
+s3repo=git://github.com/s3tools/s3cmd.git
 
 git clone $s3repo /opt/s3cmd
 
